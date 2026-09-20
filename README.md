@@ -1,8 +1,29 @@
 # Nano Banana Pro Prompts — 8 Tested Recipes With Outputs
 
-Eight **Nano Banana Pro prompts** run end to end through the API, published with the render each one produced, the aspect ratio and the cost the task reported. Copy a recipe, keep the structure, swap the subject.
+<!-- conv-kit:v1 -->
 
-**Attributed entry points:** [Open Nano Banana Pro on APIMart](https://go.apimart.ai/k-cf5994) · [Current pricing](https://go.apimart.ai/k-17949c) · [Get an API key](https://go.apimart.ai/k-f06c4a)
+<p align="center">
+  <img src="assets/badges/price.svg" alt="observed unit price"> <img src="assets/badges/billing.svg" alt="billing model"> <img src="assets/badges/compat.svg" alt="OpenAI-compatible endpoint">
+</p>
+
+<p align="center">
+  <img src="assets/01-product-hero-perfume.jpg" width="820" alt="Nano Banana Pro (gemini-3-pro-image-preview) output generated through APIMart">
+</p>
+
+> **$0.03 per image** at default resolution — one OpenAI-compatible endpoint at `https://api.apimart.ai/v1`, no monthly plan required. *(observed 2026-09-17)*
+
+**[Get an API key](https://go.apimart.ai/k-f06c4a)** · **[Live pricing](https://go.apimart.ai/k-17949c)** · **[Model page](https://go.apimart.ai/k-cf5994)** · [⚡ 60-second quickstart](#run-a-recipe-yourself)
+
+**Why teams call Nano Banana Pro (`gemini-3-pro-image-preview`) through APIMart**
+
+- **One key, entire catalog.** The same `https://api.apimart.ai/v1` base URL and `Authorization` header reach Nano Banana Pro (`gemini-3-pro-image-preview`) and 300+ other image, video and language models — switch the `model` field, not your client.
+- **$1 minimum, pay as you go.** No subscription and no prepaid plan to size up front: top up from $1 and spend it on calls. There is no free quota to burn through first, so the price in this table is the price you pay.
+- **The charge comes back in the response.** Every call reports the amount billed (`cost` / `credits_cost`), so a spend number is read per call instead of guessed at month end.
+- **Async by design.** Submit, take the `task_id`, poll `GET /v1/tasks/{id}` — batching and retries are ordinary queue work, not a bespoke integration.
+
+<!-- /conv-kit:v1 -->
+
+Eight **Nano Banana Pro prompts** run end to end through the API, published with the render each one produced, the aspect ratio and the cost the task reported. Copy a recipe, keep the structure, swap the subject.
 
 - Model: `gemini-3-pro-image-preview`
 - Recipes: **8** (machine-readable in [`data/prompts.json`](data/prompts.json), table in [`PROMPTS.md`](PROMPTS.md))
@@ -61,6 +82,32 @@ curl --request POST --url https://api.apimart.ai/v1/images/generations \
 
 Result links expire, so store the outputs; the completed task carries `cost` for reconciliation.
 
+
+<!-- conv-kit:v1:scale -->
+### What that costs at scale
+
+| Spend | Cost |
+| --- | --- |
+| 100 images | $3.00 |
+| 1000 images | $30.00 |
+| 10000 images | $300.00 |
+
+Linear at the observed per-unit rate, no volume discount assumed. Snapshot 2026-09-17; re-check the live table before committing a budget.
+<!-- /conv-kit:v1:scale -->
+
+<!-- conv-kit:v1:fix -->
+## First-call troubleshooting
+
+| Symptom | Likely cause | Fix |
+| --- | --- | --- |
+| `401` / `invalid api key` | key missing, truncated, or a stray newline pasted into the header | Re-copy it from the console; the header is `Authorization: Bearer $APIMART_API_KEY` |
+| balance / credit error | the account has no balance | Top up from $1 in the console — there is no free quota to fall back on |
+| `429` | concurrent requests on one key | Back off, then retry the same request with the same `Idempotency-Key` |
+| `400` / model not found | wrong route for the id: the per-unit alias needs its `version`, the official id must not send one | Copy the exact `model` value from the route table above |
+| task ends `failed` | prompt rejected by the filter, or a reference image URL expired | Re-submit with a **new** `Idempotency-Key` and re-host the reference image |
+| result URL stops working | result links expire | Download the file as soon as the task reports `completed` |
+<!-- /conv-kit:v1:fix -->
+
 ## FAQ
 
 **Are these prompts free to reuse?**
@@ -88,6 +135,12 @@ That is the point. Keep the structure (subject + light + framing + setting + fin
 - `ai image prompts 2026`
 - `product photography prompts`
 - `cinematic image prompts`
+
+<!-- conv-kit:v1:cta -->
+---
+
+**Start with $1.** [Get an API key](https://go.apimart.ai/k-f06c4a) → [check live pricing](https://go.apimart.ai/k-17949c) → [open Nano Banana Pro (`gemini-3-pro-image-preview`) in the model library](https://go.apimart.ai/k-cf5994). The first call is three steps: submit, poll `task_id`, read the charged amount off the response.
+<!-- /conv-kit:v1:cta -->
 
 ## Attributed links (how this repository is measured)
 
